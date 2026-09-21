@@ -49,6 +49,7 @@
         <a href="#about" class="hover:text-white transition">About</a>
         <a href="#projects" class="hover:text-white transition">Projects</a>
         <a href="#articles" class="hover:text-white transition">Articles</a>
+	<a href="#tech-bites" class="hover:text-white transition">Tech Bites</a>
         <a href="#contact" class="bg-white text-slate-950 font-semibold px-5 py-2.5 rounded-full hover:bg-slate-200 transition shadow-sm">
           Get in Touch
         </a>
@@ -219,6 +220,104 @@
         </article>
       </div>
     </section>
+
+<!-- Tech Bites Section (Pure HTML / Manual Update) -->
+<section id="tech-bites" class="py-20 px-6 max-w-6xl mx-auto border-t border-slate-900">
+  
+  <div class="text-center max-w-2xl mx-auto mb-12">
+    <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-800/60 px-3.5 py-1 rounded-full mb-3">
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+      Weekly Flash Tip
+    </div>
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">Cloud Migration Tech Bites</h2>
+    <p class="text-slate-400 text-sm">Bite-sized architecture lessons, gotchas, and cutover patterns updated weekly.</p>
+  </div>
+
+  <!-- FEATURED BITE: Edit this card whenever you want to update the weekly highlight -->
+  <div class="max-w-3xl mx-auto mb-12 p-8 rounded-2xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 to-slate-900/40 backdrop-blur-sm">
+    <div class="flex items-center justify-between text-xs font-mono mb-4">
+      <span class="bg-amber-950/80 text-amber-300 px-2.5 py-1 rounded border border-amber-800/60">
+        THIS WEEK'S SPOTLIGHT
+      </span>
+      <span class="text-slate-400">Week Focus: Cutover & Latency</span>
+    </div>
+    
+    <h3 class="text-xl sm:text-2xl font-bold text-white mb-3 leading-snug">
+      DNS TTL & The Silent JVM Cache Trap
+    </h3>
+    
+    <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+      Lowering your public DNS Time-To-Live (TTL) to 60 seconds 48 hours prior to migration cutover is standard procedure. However, many internal backend applications (especially legacy Java/.NET services) cache resolved IP addresses indefinitely until process restart unless explicitly overridden using <code class="text-amber-300 bg-slate-950 px-1.5 py-0.5 rounded font-mono text-xs">networkaddress.cache.ttl=60</code>. Always verify client-level resolver settings before flipping DNS.
+    </p>
+
+    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
+      <span class="text-amber-400 font-mono font-medium">#CutoverOps #Networking #ZeroDowntime</span>
+      <span class="text-slate-500">PSYAARA Architecture Field Note</span>
+    </div>
+  </div>
+
+  <!-- BITE REPOSITORY: Quick-reference cards on common migration challenges -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+    
+    <!-- Bite 1 -->
+    <div class="p-5 rounded-xl border border-slate-800/70 bg-slate-900/30 flex flex-col justify-between">
+      <div>
+        <span class="text-[11px] font-mono text-sky-400 uppercase tracking-wider">Storage IOPS</span>
+        <h4 class="text-sm font-bold text-white mt-1 mb-2">ADLS / S3 Partition Throttling</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Writing parallel migration streams into a single timestamp directory hits storage partition limits. Prepend deterministic hash prefixes to distribute load across storage partitions.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 font-mono">
+        #CloudStorage
+      </div>
+    </div>
+
+    <!-- Bite 2 -->
+    <div class="p-5 rounded-xl border border-slate-800/70 bg-slate-900/30 flex flex-col justify-between">
+      <div>
+        <span class="text-[11px] font-mono text-emerald-400 uppercase tracking-wider">Database Dump</span>
+        <h4 class="text-sm font-bold text-white mt-1 mb-2">Drop Non-Clustered Indexes</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Bulk hydrating target databases with active indexes slows writes by over 70%. Drop indexes before the raw bulk load and rebuild them right before starting CDC replay.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 font-mono">
+        #DatabaseMigration
+      </div>
+    </div>
+
+    <!-- Bite 3 -->
+    <div class="p-5 rounded-xl border border-slate-800/70 bg-slate-900/30 flex flex-col justify-between">
+      <div>
+        <span class="text-[11px] font-mono text-purple-400 uppercase tracking-wider">CDC Pipelines</span>
+        <h4 class="text-sm font-bold text-white mt-1 mb-2">WAL / Redo Log Truncation</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Ensure source database transaction log retention is expanded during initial sync. If an initial snapshot takes 14 hours, regular log truncation can break replication.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 font-mono">
+        #StreamingReplication
+      </div>
+    </div>
+
+    <!-- Bite 4 -->
+    <div class="p-5 rounded-xl border border-slate-800/70 bg-slate-900/30 flex flex-col justify-between">
+      <div>
+        <span class="text-[11px] font-mono text-amber-400 uppercase tracking-wider">Data Quality</span>
+        <h4 class="text-sm font-bold text-white mt-1 mb-2">Hash-Bucket Reconciliation</h4>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Simple row counts miss character encoding changes and trailing-space clipping. Run parallel MD5/SHA256 slice checks across source and target primary key ranges.
+        </p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-slate-800/60 text-[11px] text-slate-500 font-mono">
+        #DataReconciliation
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 px-6 max-w-4xl mx-auto">
